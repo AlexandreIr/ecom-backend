@@ -1,28 +1,34 @@
 package com.afdesign.ecom.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.afdesign.ecom.entities.User;
+import com.afdesign.ecom.services.UserService;
 
 @RestController
-@RequestMapping(value="/book")
+@RequestMapping(value = "/users")
 public class UserResources {
-	
+
+	@Autowired
+	private UserService service;
+
 	@GetMapping
-	public ResponseEntity<List<User>> findaAll(){
-		List<User> list = new ArrayList<>();
-		User u = new User(1L, "Alexandre", "alex.silva250@hotmail.com", "+55119999999", "123456");
-		User u2 = new User(2L, "Maria", "maria888@gmail.com", "+55118888888", "654321");
-		User u3 = new User(3L, "Adailde", "silvaadailde@gmail.com", "+551177777777", "556124");
-		list.add(u);
-		list.add(u2);
-		list.add(u3);
+	public ResponseEntity<List<User>> findaAll() {
+		List<User> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<User> findById(@PathVariable Long id) {
+		User user = service.findById(id);
+		return ResponseEntity.ok().body(user);
+	}
+	
 }
