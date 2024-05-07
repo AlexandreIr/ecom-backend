@@ -1,5 +1,6 @@
 package com.afdesign.ecom.config;
 
+import java.lang.reflect.Array;
 import java.time.Instant;
 import java.util.Arrays;
 
@@ -10,10 +11,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.afdesign.ecom.entities.Category;
 import com.afdesign.ecom.entities.Order;
+import com.afdesign.ecom.entities.OrderItem;
 import com.afdesign.ecom.entities.Product;
 import com.afdesign.ecom.entities.User;
 import com.afdesign.ecom.entities.enums.OrderStatus;
 import com.afdesign.ecom.repositories.CategoryRepository;
+import com.afdesign.ecom.repositories.OrderItemRepository;
 import com.afdesign.ecom.repositories.OrderRepository;
 import com.afdesign.ecom.repositories.ProductRepository;
 import com.afdesign.ecom.repositories.UserRepository;
@@ -33,6 +36,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository prodrep;
+	
+	@Autowired
+	private OrderItemRepository oirep;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,6 +74,12 @@ public class TestConfig implements CommandLineRunner {
 		userep.saveAll(Arrays.asList(u1, u2));
 		orderrep.saveAll(Arrays.asList(o1, o2, o3));
 		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice()); 
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice()); 
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice()); 
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+		
+		oirep.saveAll(Arrays.asList(oi1,oi2, oi3, oi4));
 		
 	}
 }
