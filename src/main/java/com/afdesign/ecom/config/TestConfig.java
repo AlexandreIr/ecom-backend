@@ -1,6 +1,5 @@
 package com.afdesign.ecom.config;
 
-import java.lang.reflect.Array;
 import java.time.Instant;
 import java.util.Arrays;
 
@@ -12,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.afdesign.ecom.entities.Category;
 import com.afdesign.ecom.entities.Order;
 import com.afdesign.ecom.entities.OrderItem;
+import com.afdesign.ecom.entities.Payment;
 import com.afdesign.ecom.entities.Product;
 import com.afdesign.ecom.entities.User;
 import com.afdesign.ecom.entities.enums.OrderStatus;
@@ -80,6 +80,10 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 		
 		oirep.saveAll(Arrays.asList(oi1,oi2, oi3, oi4));
+		
+		Payment pay = new Payment(null, Instant.parse("2019-06-20T20:53:07Z"), o1);
+		o1.setPayment(pay);
+		orderrep.save(o1);
 		
 	}
 }
