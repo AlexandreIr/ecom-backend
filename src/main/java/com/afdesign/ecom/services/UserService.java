@@ -13,6 +13,8 @@ import com.afdesign.ecom.repositories.UserRepository;
 import com.afdesign.ecom.services.exceptions.DatabaseException;
 import com.afdesign.ecom.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 	
@@ -43,9 +45,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User user) {
-		User ent = repository.getReferenceById(id);
-		updateData(ent, user);
-		return repository.save(ent);
+		try {
+			User ent = repository.getReferenceById(id);
+			updateData(ent, user);
+			return repository.save(ent);			
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void updateData(User entity, User user) {
