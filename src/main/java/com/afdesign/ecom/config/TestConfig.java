@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.afdesign.ecom.entities.Address;
 import com.afdesign.ecom.entities.Category;
 import com.afdesign.ecom.entities.Order;
 import com.afdesign.ecom.entities.OrderItem;
@@ -82,7 +83,9 @@ public class TestConfig implements CommandLineRunner {
 		oirep.saveAll(Arrays.asList(oi1,oi2, oi3, oi4));
 		
 		Payment pay = new Payment(null, Instant.parse("2019-06-20T20:53:07Z"), o1);
+		Address adr = new Address(null, "08570270", "R. Carlos Gomes", 117, "Itaquaquecetuba", "SP", o1);
 		o1.setPayment(pay);
+		o1.setAddress(adr);
 		orderrep.save(o1);
 		
 	}
